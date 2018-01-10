@@ -1,6 +1,5 @@
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
-import org.junit.Test;
 
 public class Main {
   public static void main(String[] args){
