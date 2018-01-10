@@ -1,6 +1,12 @@
 # ActumMiner
 Official software for mining ActumCoin
 
+# Usage
+## WIP
+
+# Notes
+## WIP
+
 # FAQ
 ## What is ActumCoin?
 ActumCoin is a cryptocurrency that is encrypted using the SHA3-512 hash algorithm. It is on the larger Actum system.
