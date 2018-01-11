@@ -6,6 +6,8 @@ Official software for mining ActumCoin
 
 # Notes
 ## WIP
+## Heartbeat
+Due to the nature of the Actum blockchain requiring mining diversity, miners will mine one empty transaction every two minutes while active to improve efficency and prevent blockchain freeze.
 
 # FAQ
 ## What is ActumCoin?
