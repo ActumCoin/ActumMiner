@@ -19,7 +19,7 @@ public class BlockchainCommand {
 			finalCommand = "multichain-cli ";
 			break;
 		case "o":
-			finalCommand = "multichain-cold ";
+			finalCommand = "multichaind-cold ";
 			break;
 		default:
 			// same as d
@@ -48,7 +48,7 @@ public class BlockchainCommand {
 			finalCommand = "multichain-cli ";
 			break;
 		case "o":
-			finalCommand = "multichain-cold ";
+			finalCommand = "multichaind-cold ";
 			break;
 		default:
 			// same as d
