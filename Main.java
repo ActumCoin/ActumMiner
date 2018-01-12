@@ -3,13 +3,11 @@ import java.util.Timer;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-import mining.BlockchainCommand;
 import mining.Heartbeat
 
 public class Main {
   public static void main(String[] args){
     //init
-    BlockchainCommand bc = new BlockchainCommand();
     
     //just hashing "Hello world" right now...
     String input = "Hello world";
