@@ -4,6 +4,10 @@ Official software for mining ActumCoin
 # Usage
 ## WIP
 
+# Dependencies
+## MultiChainJAVAAPI
+This is required to interface with the MultiChain blockchain system.
+
 # Notes
 ## WIP
 ## Heartbeat
