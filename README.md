@@ -6,7 +6,7 @@ Official software for mining ActumCoin
 
 # Dependencies
 ## MultiChainJAVAAPI
-This is required to interface with the MultiChain blockchain system. You can find the exact version [here](https://github.com/ActumCoin/MultiChainJavaAPI)
+This is required to interface with the MultiChain blockchain system. You can find the exact version [here](https://github.com/ActumCoin/MultiChainJavaAPI).
 
 # Notes
 ## WIP
