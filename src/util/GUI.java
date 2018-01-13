@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,27 +16,60 @@ public class GUI extends JFrame {
 	public GUI() {
 		setUIFont(new javax.swing.plaf.FontUIResource("1234", Font.PLAIN, 26));
 
+		// logo
 		JLabel logo = new JLabel(new ImageIcon("C:\\xampp\\htdocs\\ActumCoin\\logo.png"));
 		logo.setBounds(274, 10, 171, 119);// gah! not quite centered, should be right another 0.5 pixels
 
-		JButton b = new JButton("Start Mining");
-		b.setBounds(260, 139, 200, 40);
+		// mine button
+		JButton mineButton = new JButton("Start Mining");
+		mineButton.setBounds(260, 139, 200, 40);
+		mineButton.setBackground(Color.WHITE);
 
-		b.addActionListener(new ActionListener() {
+		// preferences button
+		JButton preferencesButton = new JButton("Preferences");
+		preferencesButton.setBounds(480, 10, 210, 40);
+		preferencesButton.setBackground(Color.WHITE);
+
+		// address button
+		JButton addressButton = new JButton("Set Address");
+		addressButton.setBounds(10, 10, 210, 40);
+		addressButton.setBackground(Color.WHITE);
+
+		// display current address
+		JLabel currentAddress = new JLabel(Preferences.getAddress());
+		currentAddress.setBounds(10, 10, 100, 100);
+		currentAddress.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
+
+		// listeners
+		mineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// toggle mining
 				if (MiningManager.isCurrentlyMining()) {
-					b.setText("Start Mining");
+					mineButton.setText("Start Mining");
 					MiningManager.stopMining();
 				} else {
-					b.setText("Stop Mining");
+					mineButton.setText("Stop Mining");
 					MiningManager.mine();
 				}
 			}
 		});
 
+		addressButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String s = (String) JOptionPane.showInputDialog(f, "Set your wallet address", JOptionPane.PLAIN_MESSAGE);
+
+				if ((s != null) && (s.length() > 0)) {
+					Preferences.setAddress(s);
+					currentAddress.setText(s);
+				}
+			}
+		});
+
 		add(logo);
-		add(b);
+		add(mineButton);
+		add(preferencesButton);
+		add(addressButton);
+		add(currentAddress);
 
 		setSize(720, 576);
 		setLayout(null);
