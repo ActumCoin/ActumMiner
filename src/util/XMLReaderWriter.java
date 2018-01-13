@@ -22,10 +22,8 @@ import org.xml.sax.SAXException;
 public class XMLReaderWriter {
 	
 	private static String address = null;
-	private static ArrayList<String> rolev;
 
 	public static boolean readXML(String xml) {
-		rolev = new ArrayList<String>();
 		Document dom;
 		// Make an instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -38,12 +36,7 @@ public class XMLReaderWriter {
 
 			Element doc = dom.getDocumentElement();
 
-			address = getTextValue(address, doc, "address");
-			System.out.println(address);
-			if (address != null) {
-				if (!address.isEmpty())
-					rolev.add(address);
-			}
+			address = doc.getTextContent();
 			return true;
 
 		} catch (ParserConfigurationException pce) {
@@ -57,7 +50,7 @@ public class XMLReaderWriter {
 		return false;
 	}
 
-	public static void saveToXML(String xml) {
+	public static void writeXML(String xml) {
 		Document dom;
 		Element e = null;
 
@@ -110,5 +103,4 @@ public class XMLReaderWriter {
 		return address;
 	}
 	
-
 }
