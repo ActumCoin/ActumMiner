@@ -2,8 +2,7 @@ package util;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Enumeration;
 
 import javax.swing.*;
@@ -14,7 +13,9 @@ public class GUI extends JFrame {
 	JFrame f;
 
 	public GUI() {
+		// init
 		setUIFont(new javax.swing.plaf.FontUIResource("1234", Font.PLAIN, 26));
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		// logo
 		JLabel logo = new JLabel(new ImageIcon("C:\\xampp\\htdocs\\ActumCoin\\logo.png"));
@@ -40,7 +41,7 @@ public class GUI extends JFrame {
 		currentAddress.setBounds(10, 10, 100, 100);
 		currentAddress.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
 
-		// listeners
+		// button listeners
 		mineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// toggle mining
@@ -56,11 +57,29 @@ public class GUI extends JFrame {
 
 		addressButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String s = (String) JOptionPane.showInputDialog(f, "Set your wallet address", JOptionPane.PLAIN_MESSAGE);
+				String s = (String) JOptionPane.showInputDialog(f, "Paste your wallet address",
+						"Paste your wallet address", JOptionPane.PLAIN_MESSAGE, null, null, "");
 
 				if ((s != null) && (s.length() > 0)) {
 					Preferences.setAddress(s);
 					currentAddress.setText(s);
+				}
+			}
+		});
+
+		// window close listener
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (MiningManager.isCurrentlyMining()) {
+					int n = JOptionPane.showConfirmDialog(f,
+							"You are currently mining, would you like to stop and exit?", "Currently mining",
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if (n == JOptionPane.YES_OPTION) {
+						MiningManager.stopMining();
+						dispose();
+					}
+				} else {
+					dispose();
 				}
 			}
 		});
