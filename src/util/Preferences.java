@@ -2,8 +2,6 @@ package util;
 
 public class Preferences extends XMLReaderWriter {
 	
-	private static String address;
-	
 	public Preferences() {
 		readXML("preferences.xml");
 		this.address = getAddress();
