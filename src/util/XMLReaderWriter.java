@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
 
 public class XMLReaderWriter {
 	
-	private static String address = null;
+	protected static String address = null;
 
 	public static boolean readXML(String xml) {
 		Document dom;
@@ -99,8 +99,4 @@ public class XMLReaderWriter {
 		return value;
 	}
 
-	public static String getAddress() {
-		return address;
-	}
-	
 }
