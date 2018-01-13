@@ -18,7 +18,7 @@ public class GUI extends JFrame {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		// logo
-		JLabel logo = new JLabel(new ImageIcon("C:\\xampp\\htdocs\\ActumCoin\\logo.png"));
+		JLabel logo = new JLabel(new ImageIcon("logo.png"));
 		logo.setBounds(274, 10, 171, 119);// gah! not quite centered, should be right another 0.5 pixels
 
 		// mine button
