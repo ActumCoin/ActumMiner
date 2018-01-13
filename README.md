@@ -1,4 +1,7 @@
+<img src="https://github.com/ActumCoin/ActumMiner/blob/master/logo.png">
+
 # ActumMiner
+
 Official software for mining ActumCoin
 
 # Usage
