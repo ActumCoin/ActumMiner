@@ -1,7 +1,5 @@
 package util;
 
-import javax.swing.Icon;
-
 public class Preferences extends XMLReaderWriter {
 	private static final String ADDRESS = "preferences.xml";
 	
