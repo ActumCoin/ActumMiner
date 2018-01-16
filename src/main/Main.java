@@ -3,6 +3,7 @@ package main;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
+import gui.GUI;
 import util.Preferences;
 
 public class Main {
