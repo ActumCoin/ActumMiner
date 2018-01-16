@@ -20,23 +20,30 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class XMLReaderWriter {
-	
+
 	protected static String address = null;
+	protected static boolean link;
+	protected static boolean publicStats;
 
 	public static boolean readXML(String xml) {
 		Document dom;
-		// Make an instance of the DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			// use the factory to take an instance of the document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			// parse using the builder to get the DOM mapping of the
-			// XML file
+
 			dom = db.parse(xml);
 
 			Element doc = dom.getDocumentElement();
 
-			address = doc.getTextContent();
+			// get address
+			address = getTextValue(doc, "address");
+			
+			// get link
+			link = Boolean.parseBoolean(getTextValue(doc, "link"));
+			
+			// get public-stats
+			publicStats = Boolean.parseBoolean(getTextValue(doc, "public-stats"));
+			
 			return true;
 
 		} catch (ParserConfigurationException pce) {
@@ -53,18 +60,36 @@ public class XMLReaderWriter {
 	public static void writeXML(String xml) {
 		Document dom;
 		Element e = null;
+		Element aE = null;
+		Element lE = null;
+		Element pE = null;
 
-		// instance of a DocumentBuilderFactory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			// use factory to get an instance of document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			// create instance of DOM
 			dom = db.newDocument();
 
-			// create data elements and place them under root
-			e = dom.createElement("address");
-			e.appendChild(dom.createTextNode(address));
+			// create preferences root element
+			e = dom.createElement("preferences");
+			
+			// create address element
+			aE = dom.createElement("address");
+
+			// create link element
+			lE = dom.createElement("link");
+			
+			// create public-stats element
+			pE = dom.createElement("public-stats");
+			
+			// add elements to root element
+			e.appendChild(aE);
+			e.appendChild(lE);
+			e.appendChild(pE);
+			
+			// add preferences data
+			aE.appendChild(dom.createTextNode(address));
+			lE.appendChild(dom.createTextNode(Boolean.toString(link)));
+			pE.appendChild(dom.createTextNode(Boolean.toString(publicStats)));
 
 			dom.appendChild(e);
 
@@ -73,10 +98,8 @@ public class XMLReaderWriter {
 				tr.setOutputProperty(OutputKeys.INDENT, "yes");
 				tr.setOutputProperty(OutputKeys.METHOD, "xml");
 				tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-				tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
 				tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-				// send DOM to file
 				tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(xml)));
 
 			} catch (TransformerException te) {
@@ -89,8 +112,8 @@ public class XMLReaderWriter {
 		}
 	}
 
-	private static String getTextValue(String def, Element doc, String tag) {
-		String value = def;
+	private static String getTextValue(Element doc, String tag) {
+		String value = null;
 		NodeList nl;
 		nl = doc.getElementsByTagName(tag);
 		if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
