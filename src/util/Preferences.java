@@ -1,19 +1,41 @@
 package util;
 
+import javax.swing.Icon;
+
 public class Preferences extends XMLReaderWriter {
+	private static final String ADDRESS = "preferences.xml";
 	
 	public Preferences() {
-		readXML("preferences.xml");
-		this.address = getAddress();
+		readXML(ADDRESS);
 	}
 
 	public static String getAddress() {
 		return address;
 	}
-
-	public void setAddress(String address) {
-		this.address = address;
-		writeXML("preferences.xml");
+	
+	public static boolean isLink() {
+		return link;
 	}
+	
+	public static boolean isPublicStats() {
+		return publicStats;
+	}
+	
+	public static void setAddress(String a) {
+		address = a;
+		writeXML(ADDRESS);
+	}
+	
+	public static void setLink(boolean l) {
+		link = l;
+		writeXML(ADDRESS);
+	}
+
+	public static void setPublicStats(boolean p) {
+		publicStats = p;
+		writeXML(ADDRESS);
+	}
+	
+	
 	
 }
