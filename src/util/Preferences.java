@@ -19,6 +19,11 @@ public class Preferences extends XMLReaderWriter {
 		return publicStats;
 	}
 	
+	public static String[] getIDSet() {
+		String[] IDSet = {id, secret};
+		return IDSet;
+	}
+	
 	public static void setAddress(String a) {
 		address = a;
 		writeXML(ADDRESS);
@@ -34,6 +39,10 @@ public class Preferences extends XMLReaderWriter {
 		writeXML(ADDRESS);
 	}
 	
-	
+	public static void setIDSet(String[] s) {
+		id = s[0];
+		secret = s[1];
+		writeXML(ADDRESS);
+	}
 	
 }
