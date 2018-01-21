@@ -47,6 +47,15 @@ public class GUI extends JFrame {
 		publicStatsCheckBox.setBounds(480, 100, 200, 30);
 		publicStatsCheckBox.setVisible(false);
 		publicStatsCheckBox.setToolTipText("This allows anyone to view your stats on actumcrypto.org/mine-stats.");
+		JLabel idLabel = new JLabel(Preferences.getIDSet()[0]);
+		idLabel.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
+		idLabel.setBounds(480, 100, 200, 90);
+		idLabel.setVisible(false);
+		idLabel.addMouseListener(new PopClickListener(Preferences.getIDSet()[0]));
+		JLabel keyLabel = new JLabel(Preferences.getIDSet()[1]);
+		keyLabel.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
+		keyLabel.setBounds(480, 100, 200, 135);
+		keyLabel.setVisible(false);
 		
 		// address button
 		JButton addressButton = new JButton("Set Address");
@@ -77,6 +86,8 @@ public class GUI extends JFrame {
 				isPreferences = !isPreferences;
 				linkCheckBox.setVisible(isPreferences);
 				publicStatsCheckBox.setVisible(isPreferences);
+				idLabel.setVisible(isPreferences);
+				keyLabel.setVisible(isPreferences);
 				if (isPreferences) {
 					// if already closed
 					preferencesButton.setText("Save");
@@ -124,6 +135,8 @@ public class GUI extends JFrame {
 		add(preferencesButton);
 		add(linkCheckBox);
 		add(publicStatsCheckBox);
+		add(idLabel);
+		add(keyLabel);
 		add(addressButton);
 		add(currentAddress);
 
