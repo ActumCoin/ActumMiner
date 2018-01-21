@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		// init
 		new Preferences();
-		new GUI();
+		
 		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest256();
 
 		String[] IDSet = Preferences.getIDSet();
@@ -31,7 +31,7 @@ public class Main {
 			Preferences.setIDSet(IDSet);
 		}
 		
-		System.out.println(IDSet[0] + "\n" + IDSet[1]);
+		new GUI();
 
 	}
 	
