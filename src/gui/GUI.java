@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.event.*;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 
 import javax.sound.sampled.AudioInputStream;
@@ -66,16 +70,24 @@ public class GUI extends JFrame {
 		JLabel currentAddress = new JLabel(Preferences.getAddress());
 		currentAddress.setBounds(10, 10, 210, 100);
 		currentAddress.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
+		
+		// log
+		LiveLog log = new LiveLog("Log", new String[7], 20, 220, 660, 276);
+		DateFormat df = DateFormat.getTimeInstance();
 
 		// button listeners
 		mineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Calendar cal = Calendar.getInstance();
+				Timestamp time = new Timestamp(cal.getTimeInMillis());
 				// toggle mining
 				if (MiningManager.isCurrentlyMining()) {
 					mineButton.setText("Start Mining");
+					log.log("Stopped mining: " + df.format(new Date(time.getTime())));
 					MiningManager.stopMining();
 				} else {
 					mineButton.setText("Stop Mining");
+					log.log("Started mining: " + df.format(new Date(time.getTime())));
 					MiningManager.mine();
 				}
 			}
@@ -139,6 +151,7 @@ public class GUI extends JFrame {
 		add(keyLabel);
 		add(addressButton);
 		add(currentAddress);
+		add(log.getLabel());
 
 		setSize(720, 576);
 		setLayout(null);
