@@ -2,7 +2,7 @@
 
 # ActumMiner
 
-Official software for mining ActumCoin
+Official software for mining ActumCoin and other Actum tokens
 
 ## Usage
 #### WIP
