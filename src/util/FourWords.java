@@ -1,12 +1,6 @@
 package util;
 
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.bouncycastle.jcajce.provider.digest.SHA3;
 
 public class FourWords {
 
@@ -191,8 +185,6 @@ public class FourWords {
 			"worse", "worth", "would", "wrapped", "write", "writer", "writing", "written", "wrong", "wrote", "yard",
 			"year", "yellow", "yes", "yesterday", "yet", "you", "young", "younger", "your", "yourself", "youth", "zero",
 			"zoo" };
-
-	private static Random rnd = new Random();
 
 	public static String generate() {
 		int[] intArray = createInts();
