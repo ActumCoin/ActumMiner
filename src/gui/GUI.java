@@ -1,21 +1,17 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
+import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import main.Main;
 import mining.MiningManager;
 import util.Preferences;
 
@@ -29,7 +25,7 @@ public class GUI extends JFrame {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		// logo
-		JLabel logo = new JLabel(new ImageIcon("C:\\xampp\\htdocs\\ActumCoin\\logo.png"));
+		JLabel logo = new JLabel(new ImageIcon("res/logo.png"));
 		logo.setBounds(274, 0, 171, 119);// gah! not quite centered, should be right another 0.5 pixels
 
 		// mine button
@@ -46,7 +42,8 @@ public class GUI extends JFrame {
 		CheckBox linkCheckBox = new CheckBox("Link with wallet", Preferences.isLink());
 		linkCheckBox.setBounds(480, 60, 200, 30);
 		linkCheckBox.setVisible(false);
-		linkCheckBox.setToolTipText("This allows ActumMiner to automatically sync with your ActumWallet, if it's on this PC.");
+		linkCheckBox.setToolTipText(
+				"This allows ActumMiner to automatically sync with your ActumWallet, if it's on this PC.");
 		CheckBox publicStatsCheckBox = new CheckBox("Public stats", Preferences.isPublicStats());
 		publicStatsCheckBox.setBounds(480, 100, 200, 30);
 		publicStatsCheckBox.setVisible(false);
@@ -60,7 +57,7 @@ public class GUI extends JFrame {
 		keyLabel.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
 		keyLabel.setBounds(480, 100, 200, 135);
 		keyLabel.setVisible(false);
-		
+
 		// address button
 		JButton addressButton = new JButton("Set Address");
 		addressButton.setBounds(10, 10, 210, 40);
@@ -70,9 +67,10 @@ public class GUI extends JFrame {
 		JLabel currentAddress = new JLabel(Preferences.getAddress());
 		currentAddress.setBounds(10, 10, 210, 100);
 		currentAddress.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
-		
+
 		// log
-		LiveLog log = new LiveLog("Log", new String[7], 20, 220, 660, 276, new String[]{"Ready to mine...", "Currently mining..."}, 0);
+		LiveLog log = new LiveLog("Log", new String[7], 20, 220, 660, 276,
+				new String[] { "Ready to mine...", "Currently mining..." }, 0);
 		DateFormat df = DateFormat.getTimeInstance();
 
 		// button listeners
@@ -109,7 +107,7 @@ public class GUI extends JFrame {
 					Preferences.setPublicStats(publicStatsCheckBox.isChecked());
 					preferencesButton.setText("Preferences");
 				}
-				
+
 			}
 		});
 
@@ -128,7 +126,7 @@ public class GUI extends JFrame {
 		// window close listener
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				if (MiningManager.isCurrentlyMining() ) {
+				if (MiningManager.isCurrentlyMining()) {
 					int n = JOptionPane.showConfirmDialog(f,
 							"You are currently mining, would you like to stop and exit?", "Currently mining",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -153,6 +151,14 @@ public class GUI extends JFrame {
 		add(currentAddress);
 		add(log.getLabel());
 
+		// icon
+		try {
+			setIconImage(ImageIO.read(new File("res/logo.png")));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		setTitle("ActumMiner");
 		setSize(720, 576);
 		setLayout(null);
 		setResizable(false);
