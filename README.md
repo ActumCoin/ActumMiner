@@ -1,4 +1,4 @@
-<img src="https://github.com/ActumCoin/ActumMiner/blob/master/logo.png">
+<img src="https://github.com/ActumCoin/ActumMiner/blob/master/res/logo.png">
 
 # ActumMiner
 
