@@ -8,10 +8,12 @@ import javax.swing.border.TitledBorder;
 public class LiveLog {
 
 	private String[] log;
+	private String[] statusSet;
 	private JLabel label;
 
-	public LiveLog(String name, String[] l, int x, int y, int w, int h) {
+	public LiveLog(String name, String[] l, int x, int y, int w, int h, String[] sS, int status) {
 		log = l;
+		statusSet = sS;
 		
 		String logOut = "<html>";
 
@@ -29,7 +31,7 @@ public class LiveLog {
 			}
 		}
 		
-		logOut += "</html>";
+		logOut += "<hr>" + statusSet[status] + "</html>";
 		
 		label = new JLabel(logOut);
 		label.setBounds(x, y, w, h);
@@ -38,7 +40,7 @@ public class LiveLog {
 		label.setBorder(border);
 	}
 
-	public void log(String add) {
+	public void log(String add, int status) {
 		String logOut = "<html>";
 		String[] oldLog = log;
 
@@ -58,7 +60,7 @@ public class LiveLog {
 			}
 		}
 		
-		logOut += "</html>";
+		logOut += "<hr>" + statusSet[status] + "</html>";
 
 		label.setText(logOut);
 	}
