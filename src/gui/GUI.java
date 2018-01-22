@@ -72,7 +72,7 @@ public class GUI extends JFrame {
 		currentAddress.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
 		
 		// log
-		LiveLog log = new LiveLog("Log", new String[7], 20, 220, 660, 276);
+		LiveLog log = new LiveLog("Log", new String[7], 20, 220, 660, 276, new String[]{"Ready to mine...", "Currently mining..."}, 0);
 		DateFormat df = DateFormat.getTimeInstance();
 
 		// button listeners
@@ -83,11 +83,11 @@ public class GUI extends JFrame {
 				// toggle mining
 				if (MiningManager.isCurrentlyMining()) {
 					mineButton.setText("Start Mining");
-					log.log("Stopped mining: " + df.format(new Date(time.getTime())));
+					log.log("Stopped mining: " + df.format(new Date(time.getTime())), 0);
 					MiningManager.stopMining();
 				} else {
 					mineButton.setText("Stop Mining");
-					log.log("Started mining: " + df.format(new Date(time.getTime())));
+					log.log("Started mining: " + df.format(new Date(time.getTime())), 1);
 					MiningManager.mine();
 				}
 			}
