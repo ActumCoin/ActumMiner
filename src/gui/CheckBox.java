@@ -21,6 +21,7 @@ public class CheckBox extends JCheckBox {
 
 	public CheckBox(Icon arg0, boolean arg1) {
 		super(arg0, arg1);
+		checked = arg1;
 		restOfConstrutor();
 	}
 
@@ -31,11 +32,13 @@ public class CheckBox extends JCheckBox {
 
 	public CheckBox(String arg0, boolean arg1) {
 		super(arg0, arg1);
+		checked = arg1;
 		restOfConstrutor();
 	}
 
 	public CheckBox(String arg0, Icon arg1, boolean arg2) {
 		super(arg0, arg1, arg2);
+		checked = arg2;
 		restOfConstrutor();
 	}
 
