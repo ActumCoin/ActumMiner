@@ -167,7 +167,7 @@ public class GUI extends JFrame {
 			if (value instanceof javax.swing.plaf.FontUIResource)
 				UIManager.put(key, f);
 		}
-		UIManager.put("ToolTip.font", new javax.swing.plaf.FontUIResource("Arial", Font.ITALIC, 14));
+		UIManager.put("ToolTip.font", new javax.swing.plaf.FontUIResource(f.getFontName(), Font.ITALIC, 14));
 	}
 
 }
