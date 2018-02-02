@@ -21,7 +21,7 @@ public class GUI extends JFrame {
 
 	public GUI() {
 		// init
-		setUIFont(new javax.swing.plaf.FontUIResource("1234", Font.PLAIN, 26));
+		setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 26));
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		// logo
@@ -30,8 +30,9 @@ public class GUI extends JFrame {
 
 		// mine button
 		JButton mineButton = new JButton("Start Mining");
-		mineButton.setBounds(260, 139, 200, 40);
+		mineButton.setBounds(260, 139, 210, 40);
 		mineButton.setBackground(Color.WHITE);
+		mineButton.setEnabled(Preferences.getAddress() != null);
 
 		// preferences button
 		JButton preferencesButton = new JButton("Preferences");
@@ -44,19 +45,6 @@ public class GUI extends JFrame {
 		linkCheckBox.setVisible(false);
 		linkCheckBox.setToolTipText(
 				"This allows ActumMiner to automatically sync with your ActumWallet, if it's on this PC.");
-		CheckBox publicStatsCheckBox = new CheckBox("Public stats", Preferences.isPublicStats());
-		publicStatsCheckBox.setBounds(480, 100, 200, 30);
-		publicStatsCheckBox.setVisible(false);
-		publicStatsCheckBox.setToolTipText("This allows anyone to view your stats on actumcrypto.org/mine-stats.");
-		JLabel idLabel = new JLabel(Preferences.getIDSet()[0]);
-		idLabel.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
-		idLabel.setBounds(480, 100, 200, 90);
-		idLabel.setVisible(false);
-		idLabel.addMouseListener(new PopClickListener(Preferences.getIDSet()[0]));
-		JLabel keyLabel = new JLabel(Preferences.getIDSet()[1]);
-		keyLabel.setFont(new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
-		keyLabel.setBounds(480, 100, 200, 135);
-		keyLabel.setVisible(false);
 
 		// address button
 		JButton addressButton = new JButton("Set Address");
@@ -95,17 +83,18 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				isPreferences = !isPreferences;
 				linkCheckBox.setVisible(isPreferences);
-				publicStatsCheckBox.setVisible(isPreferences);
-				idLabel.setVisible(isPreferences);
-				keyLabel.setVisible(isPreferences);
 				if (isPreferences) {
 					// if already closed
 					preferencesButton.setText("Save");
 				} else {
-					// if already open\
+					// if already open
 					Preferences.setLink(linkCheckBox.isChecked());
-					Preferences.setPublicStats(publicStatsCheckBox.isChecked());
 					preferencesButton.setText("Preferences");
+					
+					// log
+					Calendar cal = Calendar.getInstance();
+					Timestamp time = new Timestamp(cal.getTimeInMillis());
+					log.log("Preferences updated: " + df.format(new Date(time.getTime())), log.getStatus());
 				}
 
 			}
@@ -119,6 +108,14 @@ public class GUI extends JFrame {
 				if ((s != null) && (s.length() > 0)) {
 					Preferences.setAddress(s);
 					currentAddress.setText(s);
+					
+					// update mine button enabled
+					mineButton.setEnabled(Preferences.getAddress() != null);
+					
+					// log
+					Calendar cal = Calendar.getInstance();
+					Timestamp time = new Timestamp(cal.getTimeInMillis());
+					log.log("Address updated: " + df.format(new Date(time.getTime())), log.getStatus());
 				}
 			}
 		});
@@ -144,9 +141,6 @@ public class GUI extends JFrame {
 		add(mineButton);
 		add(preferencesButton);
 		add(linkCheckBox);
-		add(publicStatsCheckBox);
-		add(idLabel);
-		add(keyLabel);
 		add(addressButton);
 		add(currentAddress);
 		add(log.getLabel());
@@ -173,7 +167,7 @@ public class GUI extends JFrame {
 			if (value instanceof javax.swing.plaf.FontUIResource)
 				UIManager.put(key, f);
 		}
-		UIManager.put("ToolTip.font", new javax.swing.plaf.FontUIResource("1234", Font.ITALIC, 14));
+		UIManager.put("ToolTip.font", new javax.swing.plaf.FontUIResource("Arial", Font.ITALIC, 14));
 	}
 
 }
