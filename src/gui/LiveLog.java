@@ -1,19 +1,27 @@
 package gui;
 
 import java.awt.Color;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class LiveLog {
-
 	private String[] log;
 	private String[] statusSet;
 	private JLabel label;
+	private int status;
+	private DateFormat df;
 
-	public LiveLog(String name, String[] l, int x, int y, int w, int h, String[] sS, int status) {
+	public LiveLog(String name, String[] l, int x, int y, int w, int h, String[] sS, int s) {
 		log = l;
 		statusSet = sS;
+		status = s;
+		
+		df = DateFormat.getTimeInstance();
 		
 		String logOut = "<html>";
 
@@ -40,9 +48,15 @@ public class LiveLog {
 		label.setBorder(border);
 	}
 
-	public void log(String add, int status) {
+	public void log(String add, int s) {
+		Calendar cal = Calendar.getInstance();
+		Timestamp time = new Timestamp(cal.getTimeInMillis());
+		
+		add = df.format(new Date(time.getTime())) + " " + add;
+		
 		String logOut = "<html>";
 		String[] oldLog = log;
+		status = (s > -1 ? s : status);
 
 		log = new String[oldLog.length];
 		
@@ -67,6 +81,10 @@ public class LiveLog {
 
 	public JLabel getLabel() {
 		return label;
+	}
+
+	public int getStatus() {
+		return status;
 	}
 
 }
