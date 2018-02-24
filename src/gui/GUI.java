@@ -34,17 +34,10 @@ public class GUI extends JFrame {
 		mineButton.setBackground(Color.WHITE);
 		mineButton.setEnabled(Preferences.getAddress() != null);
 
-		// preferences button
-		JButton preferencesButton = new JButton("Preferences");
-		preferencesButton.setBounds(480, 10, 210, 40);
-		preferencesButton.setBackground(Color.WHITE);
-
-		// preferences stuff
-		CheckBox linkCheckBox = new CheckBox("Link with wallet", Preferences.isLink());
-		linkCheckBox.setBounds(480, 60, 200, 30);
-		linkCheckBox.setVisible(false);
-		linkCheckBox.setToolTipText(
-				"This allows ActumMiner to automatically sync with your ActumWallet, if it's on this PC.");
+		// info
+		JLabel info = new JLabel("ActumWallet v1.0.0");
+		info.setBounds(480, 10, 210, 40);
+		info.setFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 22));
 
 		// address button
 		JButton addressButton = new JButton("Set Address");
@@ -59,44 +52,20 @@ public class GUI extends JFrame {
 		// log
 		LiveLog log = new LiveLog("Log", new String[7], 20, 220, 660, 276,
 				new String[] { "Ready to mine...", "Currently mining..." }, 0);
-		DateFormat df = DateFormat.getTimeInstance();
 
 		// button listeners
 		mineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Calendar cal = Calendar.getInstance();
-				Timestamp time = new Timestamp(cal.getTimeInMillis());
 				// toggle mining
 				if (MiningManager.isCurrentlyMining()) {
 					mineButton.setText("Start Mining");
-					log.log("Stopped mining: " + df.format(new Date(time.getTime())), 0);
+					log.log("Stopped mining", 0);
 					MiningManager.stopMining();
 				} else {
 					mineButton.setText("Stop Mining");
-					log.log("Started mining: " + df.format(new Date(time.getTime())), 1);
+					log.log("Started mining", 1);
 					MiningManager.mine();
 				}
-			}
-		});
-
-		preferencesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				isPreferences = !isPreferences;
-				linkCheckBox.setVisible(isPreferences);
-				if (isPreferences) {
-					// if already closed
-					preferencesButton.setText("Save");
-				} else {
-					// if already open
-					Preferences.setLink(linkCheckBox.isChecked());
-					preferencesButton.setText("Preferences");
-					
-					// log
-					Calendar cal = Calendar.getInstance();
-					Timestamp time = new Timestamp(cal.getTimeInMillis());
-					log.log("Preferences updated: " + df.format(new Date(time.getTime())), log.getStatus());
-				}
-
 			}
 		});
 
@@ -115,7 +84,7 @@ public class GUI extends JFrame {
 					// log
 					Calendar cal = Calendar.getInstance();
 					Timestamp time = new Timestamp(cal.getTimeInMillis());
-					log.log("Address updated: " + df.format(new Date(time.getTime())), log.getStatus());
+					log.log("Address updated", -1);
 				}
 			}
 		});
@@ -139,8 +108,7 @@ public class GUI extends JFrame {
 
 		add(logo);
 		add(mineButton);
-		add(preferencesButton);
-		add(linkCheckBox);
+		add(info);
 		add(addressButton);
 		add(currentAddress);
 		add(log.getLabel());
