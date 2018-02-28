@@ -12,7 +12,6 @@ Official software for mining ActumCoin and other Actum tokens
 Submit an issue.
 #### Want to contribute?
 Fork this repository, add your contribution, and submit a pull request back to the master branch.
-#### WIP
 
 ## FAQ
 #### What is ActumCoin?
