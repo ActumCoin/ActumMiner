@@ -3,22 +3,19 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import mining.ForwardSmartContract;
 import mining.MiningManager;
+import multichain.command.MultichainException;
 import util.Preferences;
 
 public class GUI extends JFrame {
 	private JFrame f;
-	private boolean isPreferences = false;
-
+	
 	public GUI() {
 		// init
 		setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 26));
@@ -58,13 +55,21 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// toggle mining
 				if (MiningManager.isCurrentlyMining()) {
+					try {
+						MiningManager.toggleMining();
+					} catch (MultichainException e1) {
+						e1.printStackTrace();
+					}
 					mineButton.setText("Start Mining");
 					log.log("Stopped mining", 0);
-					MiningManager.stopMining();
 				} else {
+					try {
+						MiningManager.toggleMining();
+					} catch (MultichainException e1) {
+						e1.printStackTrace();
+					}
 					mineButton.setText("Stop Mining");
 					log.log("Started mining", 1);
-					MiningManager.mine();
 				}
 			}
 		});
@@ -78,13 +83,15 @@ public class GUI extends JFrame {
 					Preferences.setAddress(s);
 					currentAddress.setText(s);
 					
-					// update mine button enabled
+					// mine button enabled
 					mineButton.setEnabled(Preferences.getAddress() != null);
 					
 					// log
-					Calendar cal = Calendar.getInstance();
-					Timestamp time = new Timestamp(cal.getTimeInMillis());
 					log.log("Address updated", -1);
+					
+					// restart forward smart contract
+					ForwardSmartContract.getInstance().thread.interrupt();
+					ForwardSmartContract.setInstance(ForwardSmartContract.getInstance().getTxAddress(), Preferences.getAddress());
 				}
 			}
 		});
@@ -97,7 +104,12 @@ public class GUI extends JFrame {
 							"You are currently mining, would you like to stop and exit?", "Currently mining",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (n == JOptionPane.YES_OPTION) {
-						MiningManager.stopMining();
+						try {
+							MiningManager.toggleMining();
+							ForwardSmartContract.getInstance().thread.interrupt();
+						} catch (MultichainException e1) {
+							e1.printStackTrace();
+						}
 						dispose();
 					}
 				} else {
