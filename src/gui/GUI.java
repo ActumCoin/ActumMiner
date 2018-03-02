@@ -32,7 +32,7 @@ public class GUI extends JFrame {
 		mineButton.setEnabled(Preferences.getAddress() != null);
 
 		// info
-		JLabel info = new JLabel("ActumWallet v1.0.0");
+		JLabel info = new JLabel("ActumMiner v1.0.0");
 		info.setBounds(480, 10, 210, 40);
 		info.setFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 22));
 
